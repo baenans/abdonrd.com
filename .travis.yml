@@ -5,13 +5,16 @@ node_js:
   - '6'
 cache:
   directories:
-    - node_modules
+    - $HOME/.yarn-cache
 branches:
   except:
     - /^v\d/
 install:
-  - npm install
-  - npm install -g bower
+  - sudo apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
+  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  - sudo apt-get update && sudo apt-get install yarn
+  - yarn install
+  - yarn add bower
   - bower install
 before_script:
   - npm run lint
